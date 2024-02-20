@@ -5,7 +5,7 @@ We are using Redis for caching. Please install Redis with `brew install redis` t
 
 Movie search is a Sinatra application. It will use Puma for running the application server. Install Puma with `gem install puma`.
 
-Add your API key for TheMovieDatabase to the `.env` file under `TMDB_API_KEY`. Feel free to adjust `REDIS_URL` and/or `REDIS_DB_NUMBER` to avoid any clashes with your existing Redis databases.
+Rename `.env.example` to `.env` and add your API key for TheMovieDatabase under `TMDB_API_KEY`. Feel free to adjust `REDIS_URL` and/or `REDIS_DB_NUMBER` to avoid any clashes with your existing Redis databases.
 
 We use Bundler for managing dependencies. This is installed along with Ruby. Download the dependencies by running `bundle`.
 
