@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Movie Search</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
+</head>
+<body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Movie Search</h1>
+      <form action="/search" method="get" class="search-container">
+        <div class="field has-addons">
+          <div class="control is-expanded">
+            <input class="input" type="text" name="query" placeholder="Search for a movie..." value=<%= query %>>
+          </div>
+          <div class="control">
+            <button type="submit" class="button is-info">Search</button>
+          </div>
+        </div>
+        <input type="hidden" name="page" value=1>
+      </form>
+
+      <% unless movies_on_page.empty? %>
+        <article class="message <%= 'is-primary' if cache_hit %>">
+          <div class="message-body">
+            Cache hit: <%= cache_hit %>
+          </div>
+        </article>
+
+        <div class="columns is-multiline">
+          <% movies_on_page.each do |movie| %>
+            <div class="column is-one-quarter">
+              <div class="card">
+                <div class="card-image">
+                  <figure class="image" style="width: 300px; margin: auto;">
+                    <img src="<%= image_url_for(movie) %>" alt="<%= movie["title"] %>" style="display: block; width: 100%; height: auto;">
+                  </figure>
+                </div>
+                <div class="card-content">
+                  <div class="media">
+                    <div class="media-content">
+                      <p class="title is-4"><%= movie["title"] %></p>
+                      <p class="subtitle is-6">Original title: <%= movie["original_title"] %></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <% unless first_page && last_page %>
+          <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+            <% unless first_page %>
+              <a href="<%= previous_page_url %>" class="pagination-previous">Previous</a>
+            <% end %>
+            <ul class="pagination-list">
+              <li><a class="pagination-link is-current" aria-label="Page <%= current_page %>">Page <%= current_page %> of <%= total_pages %></a></li>
+            </ul>
+            <% unless last_page %>
+              <a href="<%= next_page_url %>" class="pagination-next">Next</a>
+            <% end %>
+          </nav>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+</body>
+</html>
